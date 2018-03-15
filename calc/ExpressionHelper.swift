@@ -21,11 +21,9 @@ class ExpressionHelper {
                 outputQueue.append(node)
             }
             else {
-                while operatorStack.count > 0 {
-                    if operatorStack.last!.getPrecedence() >= node.getPrecedence() && node.getValue() != "(" {
-                        let poppedNode: Node? = operatorStack.popLast()
-                        outputQueue.append(poppedNode!)
-                    }
+                while operatorStack.count > 0 && operatorStack.last!.getPrecedence() >= node.getPrecedence() && node.getValue() != "(" {
+                    let poppedNode: Node? = operatorStack.popLast()
+                    outputQueue.append(poppedNode!)
                 }
                 operatorStack.append(node)
             }
@@ -40,6 +38,7 @@ class ExpressionHelper {
                 }
             }
         }
+        
         while operatorStack.count > 0 {
             let poppedNode: Node? = operatorStack.popLast()
             outputQueue.append(poppedNode!)

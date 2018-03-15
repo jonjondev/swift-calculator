@@ -19,3 +19,4 @@ let postfixNodes: [Node] = ExpressionHelper.createPostfix(values: args)
 let result: Int = ExpressionHelper.solveExpression(nodeArray: postfixNodes)
 
 print(result)
+
