@@ -9,10 +9,7 @@
 import Foundation
 
 class Node {
-    let value: String
-    var parent: Node?
-    var leftChild: Node?
-    var rightChild: Node?
+    private let value: String
     
     init(value: String) {
         self.value = value
@@ -20,6 +17,10 @@ class Node {
     
     func getValue() -> String {
         return value
+    }
+    
+    func getIntValue() -> Int {
+        return Int(value)!
     }
     
     func isOperandNode() -> Bool  {
@@ -30,7 +31,7 @@ class Node {
         switch value {
         case "+", "-":
             return 2
-        case "*", "/", "%":
+        case "x", "/", "%":
             return 3
         default:
             return 0

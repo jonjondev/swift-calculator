@@ -21,8 +21,8 @@ class ExpressionHelper {
                 outputQueue.append(node)
             }
             else {
-                if operatorStack.count > 0 {
-                    while operatorStack.last!.getPrecedence() >= node.getPrecedence() && node.getValue() != "(" {
+                while operatorStack.count > 0 {
+                    if operatorStack.last!.getPrecedence() >= node.getPrecedence() && node.getValue() != "(" {
                         let poppedNode: Node? = operatorStack.popLast()
                         outputQueue.append(poppedNode!)
                     }
@@ -45,6 +45,43 @@ class ExpressionHelper {
             outputQueue.append(poppedNode!)
         }
         return outputQueue
+    }
+    
+    private static func performOperation(operandOne: Node, operandTwo: Node, operatorNode: Node) -> Node {
+        var result: Int
+        switch operatorNode.getValue() {
+        case "+":
+            result = operandTwo.getIntValue() + operandOne.getIntValue()
+        case "-":
+            result = operandTwo.getIntValue() - operandOne.getIntValue()
+        case "x":
+            result = operandTwo.getIntValue() * operandOne.getIntValue()
+        case "/":
+            result = operandTwo.getIntValue() / operandOne.getIntValue()
+        case "%":
+            result = operandTwo.getIntValue() % operandOne.getIntValue()
+        default:
+            return Node(value: "something went wrong")
+        }
+        return Node(value: String(result))
+    }
+    
+    static func solveExpression(nodeArray: [Node]) -> Int {
+        var stack = [Node]()
+        
+        for node in nodeArray {
+            if node.isOperandNode() {
+                stack.append(node)
+            }
+            else {
+                let nodeOne: Node = stack.popLast()!
+                let nodeTwo: Node = stack.popLast()!
+                let result: Node = performOperation(operandOne: nodeOne, operandTwo: nodeTwo, operatorNode: node)
+                
+                stack.append(result)
+            }
+        }
+        return stack.popLast()!.getIntValue()
     }
     
     static func printExpression(nodeArray: [Node]) {

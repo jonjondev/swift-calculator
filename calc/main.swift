@@ -14,4 +14,8 @@ args.removeFirst() // remove the name of the program
 
 let postfixNodes: [Node] = ExpressionHelper.createPostfix(values: args)
 
-ExpressionHelper.printExpression(nodeArray: postfixNodes)
+//ExpressionHelper.printExpression(nodeArray: postfixNodes)
+
+let result: Int = ExpressionHelper.solveExpression(nodeArray: postfixNodes)
+
+print(result)
