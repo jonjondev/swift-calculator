@@ -27,20 +27,32 @@ class ExpressionHelper {
     init() {}
     
     
+    /*
+     * setOperators(operators: [Operator])
+     *
+     * A public method to set defined operators for use.
+     */
     func setOperators(operators: [Operator]) {
         self.operators = operators
     }
     
     
+    /*
+     * setValues(values: [String]) throws
+     *
+     * A public method that nodifies each value in a given expression.
+     *
+     * Will throw a errors if values are invalid
+     */
     func setValues(values: [String]) throws {
         try nodifyValues(values: values)
     }
     
     
     /*
-     * convertToPostfix()
+     * convertToPostfix() throws
      *
-     * A public function used to convert an infix expression into a
+     * A public method used to convert an infix expression into a
      * postfix expression by applying a Shunting-yard algorithm.
      */
     func convertToPostfix() throws {
@@ -48,7 +60,7 @@ class ExpressionHelper {
         var operatorStack = [Node]()
         
         for node in expression {
-            if node.isOperandNode() {
+            if try node.isOperandNode() {
                 outputQueue.append(node)
             }
             else {
@@ -91,7 +103,7 @@ class ExpressionHelper {
     
     
     /*
-     * solveExpression() -> Int
+     * solveExpression() throws -> Int
      *
      * A helper method to solve a postfix notation expression,
      * returning it as an integer value.
@@ -100,7 +112,7 @@ class ExpressionHelper {
         var stack = [Node]()
         
         for node in expression {
-            if node.isOperandNode() {
+            if try node.isOperandNode() {
                 stack.append(node)
             }
             else {
@@ -117,15 +129,17 @@ class ExpressionHelper {
     
     
     /*
-     * nodifyValues(values: [String])
+     * nodifyValues(values: [String]) throws
      *
      * A helper function to turn all given values of a string array
      * into node values and store them in the expression array.
+     *
+     * Will throw errors if a given value is invalid.
      */
     private func nodifyValues(values: [String]) throws {
         for value in values {
             let node = Node(value: value)
-            if !node.isOperandNode() && node.getValue() != "(" && node.getValue() != ")" {
+            if try !node.isOperandNode() && node.getValue() != "(" && node.getValue() != ")" {
                 try _ = getOperator(operatorNode: node)
             }
             expression.append(node)
@@ -139,10 +153,12 @@ class ExpressionHelper {
     
     
     /*
-     * getOperator(operatorNode: Node) -> Operator?
+     * getOperator(operatorNode: Node) throws -> Operator?
      *
      * A helper function to lookup and return the corresponding
      * Operator object by comparing it to a given node's String value.
+     *
+     * Will throw an error if the operator cannot be found (undefined).
      */
     private func getOperator(operatorNode: Node) throws -> Operator {
         for operatorType in operators {

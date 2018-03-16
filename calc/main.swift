@@ -45,3 +45,7 @@ catch CalculationError.dividedByZero {
     print("CalculationError.dividedByZero: Cannot divide operand by zero.")
     exit(1)
 }
+catch CalculationError.operandOutOfBounds(let operand) {
+    print("CalculationError.operandOutOfBounds: Operand [\(operand)] too small or large to handle.")
+    exit(1)
+}
