@@ -12,6 +12,7 @@
 		054418F62055EFEB008C821B /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054418F52055EFEB008C821B /* main.swift */; };
 		05C4D95F1E76182500AB9F52 /* CalcTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C4D95E1E76182500AB9F52 /* CalcTest.swift */; };
 		DDA21E5920590F5F000D5749 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA21E5820590F5F000D5749 /* Node.swift */; };
+		DDE6DBF5205BBE35006AAE20 /* CalculationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE6DBF4205BBE35006AAE20 /* CalculationError.swift */; };
 		DDF379322059EEB4006EE7A5 /* ExpressionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF379312059EEB4006EE7A5 /* ExpressionHelper.swift */; };
 		DDF37934205B7780006EE7A5 /* Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF37933205B7780006EE7A5 /* Operator.swift */; };
 /* End PBXBuildFile section */
@@ -47,6 +48,7 @@
 		05C4D9601E76182500AB9F52 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05F9F69E1E9DEDD500694D73 /* CalcTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalcTest-Bridging-Header.h"; sourceTree = "<group>"; };
 		DDA21E5820590F5F000D5749 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		DDE6DBF4205BBE35006AAE20 /* CalculationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculationError.swift; sourceTree = "<group>"; };
 		DDF379312059EEB4006EE7A5 /* ExpressionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionHelper.swift; sourceTree = "<group>"; };
 		DDF37933205B7780006EE7A5 /* Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,6 +87,7 @@
 				DDA21E5820590F5F000D5749 /* Node.swift */,
 				DDF379312059EEB4006EE7A5 /* ExpressionHelper.swift */,
 				DDF37933205B7780006EE7A5 /* Operator.swift */,
+				DDE6DBF4205BBE35006AAE20 /* CalculationError.swift */,
 			);
 			path = calc;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 			files = (
 				DDF379322059EEB4006EE7A5 /* ExpressionHelper.swift in Sources */,
 				DDF37934205B7780006EE7A5 /* Operator.swift in Sources */,
+				DDE6DBF5205BBE35006AAE20 /* CalculationError.swift in Sources */,
 				054418F62055EFEB008C821B /* main.swift in Sources */,
 				DDA21E5920590F5F000D5749 /* Node.swift in Sources */,
 			);

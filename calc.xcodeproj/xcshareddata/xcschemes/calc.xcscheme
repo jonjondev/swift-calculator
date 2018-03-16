@@ -80,31 +80,15 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "93"
+            argument = "7"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "+"
+            argument = "/"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "74"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "+"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-38"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "+"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-13"
+            argument = "1"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

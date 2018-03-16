@@ -16,15 +16,32 @@ let definedOperators = [
     Operator(symbol: "+", precedence: 2, operation: (+)),
     Operator(symbol: "-", precedence: 2, operation: (-)),
     Operator(symbol: "x", precedence: 3, operation: (*)),
-    Operator(symbol: "/", precedence: 3, operation: (/)),
+    Operator(symbol: "/", precedence: 3, operation: (/), checkRightOperandZero: true),
     Operator(symbol: "%", precedence: 3, operation: (%))
 ]
 
-// Creates an ExpressionHelper object with the arguments and defined operators
-var expressionHelper: ExpressionHelper = ExpressionHelper(values: args, operators: definedOperators)
+// Creates an ExpressionHelper object
+let expressionHelper: ExpressionHelper = ExpressionHelper()
 
-// Converts the expression to postfix notation for evaluation
-expressionHelper.convertToPostfix()
+// Supplies the ExpressionHelper with operator definitions
+expressionHelper.setOperators(operators: definedOperators)
 
-// Evaluates and prints the result
-expressionHelper.printSolvedExpression()
+// Catches possible errors
+do {
+    // Sets the the ExpressionHelper with the values supplied as arguments
+    try expressionHelper.setValues(values: args)
+    
+    // Converts the expression to postfix notation for evaluation
+    try expressionHelper.convertToPostfix()
+
+    // Evaluates and prints the result
+    try expressionHelper.printSolvedExpression()
+}
+catch CalculationError.undefinedOperator(let undefinedOperator) {
+    print("CalculationError.undefinedOperator: Found unspecified operator \(undefinedOperator), please check input and try again.")
+    exit(1)
+}
+catch CalculationError.dividedByZero {
+    print("CalculationError.dividedByZero: Cannot divide operand by zero.")
+    exit(1)
+}

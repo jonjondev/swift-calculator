@@ -24,9 +24,16 @@ class ExpressionHelper {
      * A constructor that nodifies each value in a given expression and
      * initialises the operators that may be used to solve it.
      */
-    init(values: [String], operators: [Operator]) {
-        nodifyValues(values: values)
+    init() {}
+    
+    
+    func setOperators(operators: [Operator]) {
         self.operators = operators
+    }
+    
+    
+    func setValues(values: [String]) throws {
+        try nodifyValues(values: values)
     }
     
     
@@ -36,7 +43,7 @@ class ExpressionHelper {
      * A public function used to convert an infix expression into a
      * postfix expression by applying a Shunting-yard algorithm.
      */
-    func convertToPostfix() {
+    func convertToPostfix() throws {
         var outputQueue = [Node]()
         var operatorStack = [Node]()
         
@@ -45,10 +52,20 @@ class ExpressionHelper {
                 outputQueue.append(node)
             }
             else {
-                if operatorStack.count > 0 {
-                    while operatorStack.count > 0 && getOperator(operatorNode: operatorStack.last!)!.getPrecedence() >= getOperator(operatorNode: node)!.getPrecedence() && node.getValue() != "(" {
+                
+                if !operatorStack.isEmpty {
+                    // Setup while conditions
+                    var operatorStackPrecedence: Int = try getNodePrecedence(operatorNode: operatorStack.last!)
+                    let currentNodePrecedence: Int = try getNodePrecedence(operatorNode: node)
+                    
+                    while !operatorStack.isEmpty && operatorStackPrecedence >= currentNodePrecedence && node.getValue() != "(" {
                         let poppedNode: Node? = operatorStack.popLast()
                         outputQueue.append(poppedNode!)
+                        
+                        // Update while conditions
+                        if !operatorStack.isEmpty {
+                            operatorStackPrecedence = try getNodePrecedence(operatorNode: operatorStack.last!)
+                        }
                     }
                 }
                 operatorStack.append(node)
@@ -79,7 +96,7 @@ class ExpressionHelper {
      * A helper method to solve a postfix notation expression,
      * returning it as an integer value.
      */
-    private func solveExpression() -> Int {
+    private func solveExpression() throws -> Int {
         var stack = [Node]()
         
         for node in expression {
@@ -89,8 +106,8 @@ class ExpressionHelper {
             else {
                 let valueOne: Int = stack.popLast()!.getIntValue()
                 let valueTwo: Int = stack.popLast()!.getIntValue()
-                let operatorType: Operator = getOperator(operatorNode: node)!
-                let result: Int = operatorType.performOperation(operandOne: valueOne, operandTwo: valueTwo)
+                let operatorType: Operator = try getOperator(operatorNode: node)
+                let result: Int = try operatorType.performOperation(operandOne: valueOne, operandTwo: valueTwo)
                 let resultString: String = String(result)
                 stack.append(Node(value: resultString))
             }
@@ -105,11 +122,19 @@ class ExpressionHelper {
      * A helper function to turn all given values of a string array
      * into node values and store them in the expression array.
      */
-    private func nodifyValues(values: [String]) {
+    private func nodifyValues(values: [String]) throws {
         for value in values {
             let node = Node(value: value)
+            if !node.isOperandNode() && node.getValue() != "(" && node.getValue() != ")" {
+                try _ = getOperator(operatorNode: node)
+            }
             expression.append(node)
         }
+    }
+    
+    
+    private func getNodePrecedence(operatorNode: Node) throws -> Int {
+        return try getOperator(operatorNode: operatorNode).getPrecedence()
     }
     
     
@@ -119,13 +144,13 @@ class ExpressionHelper {
      * A helper function to lookup and return the corresponding
      * Operator object by comparing it to a given node's String value.
      */
-    private func getOperator(operatorNode: Node) -> Operator? {
+    private func getOperator(operatorNode: Node) throws -> Operator {
         for operatorType in operators {
             if operatorType.getSymbol() == operatorNode.getValue() {
                 return operatorType
             }
         }
-        return nil
+        throw CalculationError.undefinedOperator(undefinedOperator: operatorNode.getValue())
     }
     
     
@@ -150,8 +175,8 @@ class ExpressionHelper {
      * A public function that prints out the result of an expression using the
      * solveExpression() helper function.
      */
-    func printSolvedExpression() {
-        print(solveExpression())
+    func printSolvedExpression() throws {
+        print(try solveExpression())
     }
     
 }
