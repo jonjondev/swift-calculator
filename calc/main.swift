@@ -8,15 +8,23 @@
 
 import Foundation
 
+var args = ProcessInfo.processInfo.arguments // Gets the startup arguments
+args.removeFirst() // Removes the name of the program
 
-var args = ProcessInfo.processInfo.arguments
-args.removeFirst() // remove the name of the program
+// Define all operators to be used here in a similar style
+let definedOperators = [
+    Operator(symbol: "+", precedence: 2, operation: (+)),
+    Operator(symbol: "-", precedence: 2, operation: (-)),
+    Operator(symbol: "x", precedence: 3, operation: (*)),
+    Operator(symbol: "/", precedence: 3, operation: (/)),
+    Operator(symbol: "%", precedence: 3, operation: (%))
+]
 
-let postfixNodes: [Node] = ExpressionHelper.createPostfix(values: args)
+// Creates an ExpressionHelper object with the arguments and defined operators
+var expressionHelper: ExpressionHelper = ExpressionHelper(values: args, operators: definedOperators)
 
-//ExpressionHelper.printExpression(nodeArray: postfixNodes)
+// Converts the expression to postfix notation for evaluation
+expressionHelper.convertToPostfix()
 
-let result: Int = ExpressionHelper.solveExpression(nodeArray: postfixNodes)
-
-print(result)
-
+// Evaluates and prints the result
+expressionHelper.printSolvedExpression()

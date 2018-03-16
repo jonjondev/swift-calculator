@@ -13,6 +13,7 @@
 		05C4D95F1E76182500AB9F52 /* CalcTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C4D95E1E76182500AB9F52 /* CalcTest.swift */; };
 		DDA21E5920590F5F000D5749 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA21E5820590F5F000D5749 /* Node.swift */; };
 		DDF379322059EEB4006EE7A5 /* ExpressionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF379312059EEB4006EE7A5 /* ExpressionHelper.swift */; };
+		DDF37934205B7780006EE7A5 /* Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDF37933205B7780006EE7A5 /* Operator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		05F9F69E1E9DEDD500694D73 /* CalcTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalcTest-Bridging-Header.h"; sourceTree = "<group>"; };
 		DDA21E5820590F5F000D5749 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		DDF379312059EEB4006EE7A5 /* ExpressionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressionHelper.swift; sourceTree = "<group>"; };
+		DDF37933205B7780006EE7A5 /* Operator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				054418F52055EFEB008C821B /* main.swift */,
 				DDA21E5820590F5F000D5749 /* Node.swift */,
 				DDF379312059EEB4006EE7A5 /* ExpressionHelper.swift */,
+				DDF37933205B7780006EE7A5 /* Operator.swift */,
 			);
 			path = calc;
 			sourceTree = "<group>";
@@ -209,6 +212,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDF379322059EEB4006EE7A5 /* ExpressionHelper.swift in Sources */,
+				DDF37934205B7780006EE7A5 /* Operator.swift in Sources */,
 				054418F62055EFEB008C821B /* main.swift in Sources */,
 				DDA21E5920590F5F000D5749 /* Node.swift in Sources */,
 			);
@@ -254,6 +258,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -277,6 +282,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
@@ -400,7 +406,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "CalcTest/CalcTest-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -421,7 +427,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "CalcTest/CalcTest-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
