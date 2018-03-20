@@ -9,57 +9,34 @@
 import Foundation
 
 /*
- * A model class to represent a given Operator.
+ * A struct to represent a given Operator.
  */
-class Operator {
+struct Operator {
     
-    // Private class fields
-    private let symbol: String
-    private let precedence: Int
-    private let checkRightOperandZero: Bool?
+    // Struct fields
+    let precedence: Int
+    private let checkRightOperandZero: Bool
     private let operation: (Int, Int) -> Int
     
-    // Define all operators to be used here in a similar style
-    static let standardOperators: [Operator] = [
-        Operator(symbol: "+", precedence: 2, operation: (+)),
-        Operator(symbol: "-", precedence: 2, operation: (-)),
-        Operator(symbol: "x", precedence: 3, operation: (*)),
-        Operator(symbol: "/", precedence: 3, operation: (/), checkRightOperandZero: true),
-        Operator(symbol: "%", precedence: 3, operation: (%), checkRightOperandZero: true)
+    // Provides a static set of standard operators for usage
+    static let standardOperators: [String: Operator] = [
+        "+": Operator(precedence: 2, operation: (+)),
+        "-": Operator(precedence: 2, operation: (-)),
+        "x": Operator(precedence: 3, operation: (*)),
+        "/": Operator(precedence: 3, operation: (/), checkRightOperandZero: true),
+        "%": Operator(precedence: 3, operation: (%), checkRightOperandZero: true)
     ]
     
     
     /*
-     * Operator()
-     *
-     * A constructor that initialises the symbol and precendence of
-     * the Operator, as well as the operation function.
+     * A constructor that initialises the precendence of the
+     * Operator, its operation function and takes an optional
+     * parameter to check if the right operand is zero.
      */
-    init(symbol: String, precedence: Int, operation: @escaping (Int, Int) -> Int, checkRightOperandZero: Bool? = false) {
-        self.symbol = symbol
+    init(precedence: Int, operation: @escaping (Int, Int) -> Int, checkRightOperandZero: Bool = false) {
         self.precedence = precedence
         self.operation = operation // This is a function matching (Int, Int) -> Int
-        self.checkRightOperandZero = checkRightOperandZero
-    }
-    
-    
-    /*
-     * getSymbol() -> String
-     *
-     * A getter method that returns the Operator's symbol as a String.
-     */
-    func getSymbol() -> String {
-        return symbol
-    }
-    
-    
-    /*
-     * getPrecedence() -> Int
-     *
-     * A getter method that returns the Operator's precedence as an Int.
-     */
-    func getPrecedence() -> Int {
-        return precedence
+        self.checkRightOperandZero = checkRightOperandZero ? true : false
     }
     
     
@@ -69,8 +46,8 @@ class Operator {
      * A public method that performs the Operator's operation on two
      * supplied Int values (the operands) and returns the result.
      */
-    func performOperation(operandOne: Int, operandTwo: Int) throws -> Int {
-        if checkRightOperandZero! && operandOne == 0{
+    func performOperation(on operandOne: Int, and operandTwo: Int) throws -> Int {
+        if checkRightOperandZero && operandOne == 0{
             throw CalculationError.dividedByZero
         }
         return operation(operandTwo, operandOne)

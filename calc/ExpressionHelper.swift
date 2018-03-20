@@ -14,7 +14,7 @@ import Foundation
 class ExpressionHelper {
     
     // Private class fields
-    private var operators: [Operator]
+    private var operators: [String: Operator]
     private var expression: [Node] = [Node]()
     
     
@@ -25,11 +25,14 @@ class ExpressionHelper {
      * initialises the operators that may be used to solve it.
      */
     init(useStandardOperators: Bool) {
-        operators = useStandardOperators ? Operator.standardOperators : [Operator]()
+        operators = useStandardOperators ? Operator.standardOperators : [String: Operator]()
     }
     
-    func add(newOperator: Operator) {
-        operators.append(newOperator)
+    /*
+     * Adds a new operator definition to operator dictionary.
+     */
+    func addOperator(symbol: String, precedence: Int, operation: @escaping (Int, Int) -> Int, checkRightOperandZero: Bool) {
+        operators[symbol] = Operator(precedence: precedence, operation: operation, checkRightOperandZero: checkRightOperandZero)
     }
     
     /*
@@ -114,7 +117,7 @@ class ExpressionHelper {
                 let valueOne: Int = stack.popLast()!.getIntValue()
                 let valueTwo: Int = stack.popLast()!.getIntValue()
                 let operatorType: Operator = try getOperator(operatorNode: node)
-                let result: Int = try operatorType.performOperation(operandOne: valueOne, operandTwo: valueTwo)
+                let result: Int = try operatorType.performOperation(on: valueOne, and: valueTwo)
                 let resultString: String = String(result)
                 stack.append(Node(value: resultString))
             }
@@ -143,23 +146,21 @@ class ExpressionHelper {
     
     
     private func getNodePrecedence(operatorNode: Node) throws -> Int {
-        return try getOperator(operatorNode: operatorNode).getPrecedence()
+        return try getOperator(operatorNode: operatorNode).precedence
     }
     
     
     /*
-     * getOperator(operatorNode: Node) throws -> Operator?
+     * A helper function to return the corresponding Operator object by
+     * its symbol.
      *
-     * A helper function to lookup and return the corresponding
-     * Operator object by comparing it to a given node's String value.
-     *
-     * Will throw an error if the operator cannot be found (undefined).
+     * It will throw an error if the operator cannot be found (undefined).
      */
     private func getOperator(operatorNode: Node) throws -> Operator {
-        for operatorType in operators {
-            if operatorType.getSymbol() == operatorNode.getValue() {
-                return operatorType
-            }
+        
+        let operatorType = operators[operatorNode.getValue()]
+        if operatorType != nil {
+            return operatorType!
         }
         throw CalculationError.undefinedOperator(undefinedOperator: operatorNode.getValue())
     }
