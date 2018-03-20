@@ -63,8 +63,8 @@ struct Expression: CustomStringConvertible {
                 
                 if !operatorStack.isEmpty {
                     // Setup while conditions
-                    var operatorStackPrecedence: Int = try getNodePrecedence(operatorNode: operatorStack.last!)
-                    let currentNodePrecedence: Int = try getNodePrecedence(operatorNode: node)
+                    var operatorStackPrecedence: Int = try getPrecedence(node: operatorStack.last!)
+                    let currentNodePrecedence: Int = try getPrecedence(node: node)
                     
                     while !operatorStack.isEmpty && operatorStackPrecedence >= currentNodePrecedence && node.value != "(" {
                         let poppedNode: Node? = operatorStack.popLast()
@@ -72,7 +72,7 @@ struct Expression: CustomStringConvertible {
                         
                         // Update while conditions
                         if !operatorStack.isEmpty {
-                            operatorStackPrecedence = try getNodePrecedence(operatorNode: operatorStack.last!)
+                            operatorStackPrecedence = try getPrecedence(node: operatorStack.last!)
                         }
                     }
                 }
@@ -112,7 +112,7 @@ struct Expression: CustomStringConvertible {
             else {
                 let valueOne: Int = stack.popLast()!.intValue()
                 let valueTwo: Int = stack.popLast()!.intValue()
-                let operatorType: Operator = try getOperator(operatorNode: node)
+                let operatorType: Operator = try getOperator(node: node)
                 let result: Int = try operatorType.performOperation(on: valueOne, and: valueTwo)
                 let resultString: String = String(result)
                 stack.append(Node(value: resultString))
@@ -132,7 +132,7 @@ struct Expression: CustomStringConvertible {
         for value in values {
             let node = Node(value: value)
             if try !node.isOperandNode() && node.value != "(" && node.value != ")" {
-                try _ = getOperator(operatorNode: node)
+                try _ = getOperator(node: node)
             }
             expression.append(node)
         }
@@ -141,8 +141,8 @@ struct Expression: CustomStringConvertible {
     /*
      * A helper function to return a given operator node's precedence.
      */
-    private func getNodePrecedence(operatorNode: Node) throws -> Int {
-        return try getOperator(operatorNode: operatorNode).precedence
+    private func getPrecedence(node operatorNode: Node) throws -> Int {
+        return try getOperator(node: operatorNode).precedence
     }
     
     
@@ -152,7 +152,7 @@ struct Expression: CustomStringConvertible {
      *
      * It will throw an error if the operator cannot be found (undefined).
      */
-    private func getOperator(operatorNode: Node) throws -> Operator {
+    private func getOperator(node operatorNode: Node) throws -> Operator {
         
         let operatorType = operators[operatorNode.value]
         if operatorType != nil {
