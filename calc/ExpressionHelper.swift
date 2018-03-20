@@ -11,49 +11,38 @@ import Foundation
 /*
  * A helper class to assist in manipulating a given infix expression.
  */
-class ExpressionHelper {
+struct ExpressionHelper {
     
-    // Private class fields
-    private var operators: [String: Operator]
-    private var expression: [Node] = [Node]()
+    // Struct fields
+    var operators: [String: Operator]
+    var expression: [Node] = [Node]()
     
     
     /*
-     * ExpressionHelper()
-     *
      * A constructor that nodifies each value in a given expression and
-     * initialises the operators that may be used to solve it.
+     * provides the option to turn off standard operators.
+     *
+     * If an issue occurs while nodifying values, it will throw an error.
      */
-    init(useStandardOperators: Bool) {
+    init(expression: [String], useStandardOperators: Bool = true) throws {
         operators = useStandardOperators ? Operator.standardOperators : [String: Operator]()
+        try nodify(expression: expression)
     }
+    
     
     /*
      * Adds a new operator definition to operator dictionary.
      */
-    func addOperator(symbol: String, precedence: Int, operation: @escaping (Int, Int) -> Int, checkRightOperandZero: Bool) {
+    mutating func addOperator(symbol: String, precedence: Int, operation: @escaping (Int, Int) -> Int, checkRightOperandZero: Bool) {
         operators[symbol] = Operator(precedence: precedence, operation: operation, checkRightOperandZero: checkRightOperandZero)
     }
     
-    /*
-     * setValues(values: [String]) throws
-     *
-     * A public method that nodifies each value in a given expression.
-     *
-     * Will throw a errors if values are invalid
-     */
-    func setValues(values: [String]) throws {
-        try nodifyValues(values: values)
-    }
-    
     
     /*
-     * convertToPostfix() throws
-     *
      * A public method used to convert an infix expression into a
      * postfix expression by applying a Shunting-yard algorithm.
      */
-    func convertToPostfix() throws {
+    mutating func convertToPostfix() throws {
         var outputQueue = [Node]()
         var operatorStack = [Node]()
         
@@ -101,12 +90,10 @@ class ExpressionHelper {
     
     
     /*
-     * solveExpression() throws -> Int
-     *
-     * A helper method to solve a postfix notation expression,
+     * A method to solve a postfix notation expression,
      * returning it as an integer value.
      */
-    private func solveExpression() throws -> Int {
+    func solveExpression() throws -> Int {
         var stack = [Node]()
         
         for node in expression {
@@ -127,14 +114,12 @@ class ExpressionHelper {
     
     
     /*
-     * nodifyValues(values: [String]) throws
-     *
      * A helper function to turn all given values of a string array
      * into node values and store them in the expression array.
      *
      * Will throw errors if a given value is invalid.
      */
-    private func nodifyValues(values: [String]) throws {
+    mutating private func nodify(expression values: [String]) throws {
         for value in values {
             let node = Node(value: value)
             if try !node.isOperandNode() && node.getValue() != "(" && node.getValue() != ")" {
@@ -144,7 +129,9 @@ class ExpressionHelper {
         }
     }
     
-    
+    /*
+     * A helper function to return a given operator node's precedence.
+     */
     private func getNodePrecedence(operatorNode: Node) throws -> Int {
         return try getOperator(operatorNode: operatorNode).precedence
     }
@@ -178,17 +165,6 @@ class ExpressionHelper {
             outputString += node.getValue() + " "
         }
         print(outputString)
-    }
-    
-    
-    /*
-     * printSolvedExpression()
-     *
-     * A public function that prints out the result of an expression using the
-     * solveExpression() helper function.
-     */
-    func printSolvedExpression() throws {
-        print(try solveExpression())
     }
     
 }

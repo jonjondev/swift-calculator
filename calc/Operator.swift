@@ -36,18 +36,20 @@ struct Operator {
     init(precedence: Int, operation: @escaping (Int, Int) -> Int, checkRightOperandZero: Bool = false) {
         self.precedence = precedence
         self.operation = operation // This is a function matching (Int, Int) -> Int
-        self.checkRightOperandZero = checkRightOperandZero ? true : false
+        self.checkRightOperandZero = checkRightOperandZero // Forces it into a Bool
     }
     
     
     /*
-     * performOperation(operandOne: Int, operandTwo: Int) -> Int
-     *
      * A public method that performs the Operator's operation on two
      * supplied Int values (the operands) and returns the result.
+     *
+     * If operator specifies that it should check the right operand
+     * and the right operand is zero, it will throw an error for
+     * attempting to deivide by zero.
      */
     func performOperation(on operandOne: Int, and operandTwo: Int) throws -> Int {
-        if checkRightOperandZero && operandOne == 0{
+        if checkRightOperandZero && operandOne == 0 {
             throw CalculationError.dividedByZero
         }
         return operation(operandTwo, operandOne)

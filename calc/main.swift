@@ -11,19 +11,18 @@ import Foundation
 var args = ProcessInfo.processInfo.arguments // Gets the startup arguments
 args.removeFirst() // Removes the name of the program
 
-// Creates an ExpressionHelper object and tells it to use standard operators
-let expressionHelper: ExpressionHelper = ExpressionHelper(useStandardOperators: true)
-
 // Catches possible errors
 do {
-    // Sets the the ExpressionHelper with the values supplied as arguments
-    try expressionHelper.setValues(values: args)
+    // Creates an ExpressionHelper object and tells it to use standard operators
+    // and sets expression to values supplied as arguments
+    var expressionHelper: ExpressionHelper = try ExpressionHelper(expression: args)
     
     // Converts the expression to postfix notation for evaluation
     try expressionHelper.convertToPostfix()
 
     // Evaluates and prints the result
-    try expressionHelper.printSolvedExpression()
+    let result = try expressionHelper.solveExpression()
+    print(result)
 }
 catch CalculationError.undefinedOperator(let undefinedOperator) {
     print("CalculationError.undefinedOperator: Found unspecified operator \(undefinedOperator), please check input and try again.")
