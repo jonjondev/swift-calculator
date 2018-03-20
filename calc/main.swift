@@ -24,15 +24,7 @@ do {
     let result = try expression.solveExpression()
     print(result)
 }
-catch CalculationError.undefinedOperator(let undefinedOperator) {
-    print("CalculationError.undefinedOperator: Found unspecified operator \(undefinedOperator), please check input and try again.")
-    exit(1)
-}
-catch CalculationError.dividedByZero {
-    print("CalculationError.dividedByZero: Cannot divide operand by zero.")
-    exit(1)
-}
-catch CalculationError.operandOutOfBounds(let operand) {
-    print("CalculationError.operandOutOfBounds: Operand [\(operand)] too small or large to handle.")
+catch let error as CalculationError {
+    print(error.localizedDescription)
     exit(1)
 }
