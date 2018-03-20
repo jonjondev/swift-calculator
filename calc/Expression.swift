@@ -30,12 +30,10 @@ struct Expression: CustomStringConvertible {
     /*
      * A constructor that nodifies each value in a given expression and
      * provides the option to turn off standard operators.
-     *
-     * If an issue occurs while nodifying values, it will throw an error.
      */
-    init(expression: [String], useStandardOperators: Bool = true) throws {
+    init(expression: [String], useStandardOperators: Bool = true) {
         operators = useStandardOperators ? Operator.standardOperators : [String: Operator]()
-        try nodify(expression: expression)
+        nodify(expression: expression)
     }
     
     
@@ -125,21 +123,18 @@ struct Expression: CustomStringConvertible {
     /*
      * A helper function to turn all given values of a string array
      * into node values and store them in the expression array.
-     *
-     * Will throw errors if a given value is invalid.
      */
-    mutating private func nodify(expression values: [String]) throws {
+    mutating private func nodify(expression values: [String]) {
         for value in values {
             let node = Node(value: value)
-            if try !node.isOperandNode() && node.value != "(" && node.value != ")" {
-                try _ = getOperator(node: node)
-            }
             expression.append(node)
         }
     }
     
     /*
      * A helper function to return a given operator node's precedence.
+     *
+     * Will throw errors if the operator is undefined.
      */
     private func getPrecedence(node operatorNode: Node) throws -> Int {
         return try getOperator(node: operatorNode).precedence
