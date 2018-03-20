@@ -19,6 +19,15 @@ class Operator {
     private let checkRightOperandZero: Bool?
     private let operation: (Int, Int) -> Int
     
+    // Define all operators to be used here in a similar style
+    static let standardOperators: [Operator] = [
+        Operator(symbol: "+", precedence: 2, operation: (+)),
+        Operator(symbol: "-", precedence: 2, operation: (-)),
+        Operator(symbol: "x", precedence: 3, operation: (*)),
+        Operator(symbol: "/", precedence: 3, operation: (/), checkRightOperandZero: true),
+        Operator(symbol: "%", precedence: 3, operation: (%), checkRightOperandZero: true)
+    ]
+    
     
     /*
      * Operator()

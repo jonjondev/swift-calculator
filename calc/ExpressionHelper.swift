@@ -14,7 +14,7 @@ import Foundation
 class ExpressionHelper {
     
     // Private class fields
-    private var operators: [Operator] = [Operator]()
+    private var operators: [Operator]
     private var expression: [Node] = [Node]()
     
     
@@ -24,18 +24,13 @@ class ExpressionHelper {
      * A constructor that nodifies each value in a given expression and
      * initialises the operators that may be used to solve it.
      */
-    init() {}
-    
-    
-    /*
-     * setOperators(operators: [Operator])
-     *
-     * A public method to set defined operators for use.
-     */
-    func setOperators(operators: [Operator]) {
-        self.operators = operators
+    init(useStandardOperators: Bool) {
+        operators = useStandardOperators ? Operator.standardOperators : [Operator]()
     }
     
+    func add(newOperator: Operator) {
+        operators.append(newOperator)
+    }
     
     /*
      * setValues(values: [String]) throws

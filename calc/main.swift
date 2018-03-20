@@ -11,20 +11,8 @@ import Foundation
 var args = ProcessInfo.processInfo.arguments // Gets the startup arguments
 args.removeFirst() // Removes the name of the program
 
-// Define all operators to be used here in a similar style
-let definedOperators = [
-    Operator(symbol: "+", precedence: 2, operation: (+)),
-    Operator(symbol: "-", precedence: 2, operation: (-)),
-    Operator(symbol: "x", precedence: 3, operation: (*)),
-    Operator(symbol: "/", precedence: 3, operation: (/), checkRightOperandZero: true),
-    Operator(symbol: "%", precedence: 3, operation: (%))
-]
-
-// Creates an ExpressionHelper object
-let expressionHelper: ExpressionHelper = ExpressionHelper()
-
-// Supplies the ExpressionHelper with operator definitions
-expressionHelper.setOperators(operators: definedOperators)
+// Creates an ExpressionHelper object and tells it to use standard operators
+let expressionHelper: ExpressionHelper = ExpressionHelper(useStandardOperators: true)
 
 // Catches possible errors
 do {
