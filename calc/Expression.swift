@@ -21,7 +21,7 @@ struct Expression: CustomStringConvertible {
     var description: String {
         var outputString: String = String()
         for node in expression {
-            outputString += node.getValue() + " "
+            outputString += node.value + " "
         }
         return outputString
     }
@@ -66,7 +66,7 @@ struct Expression: CustomStringConvertible {
                     var operatorStackPrecedence: Int = try getNodePrecedence(operatorNode: operatorStack.last!)
                     let currentNodePrecedence: Int = try getNodePrecedence(operatorNode: node)
                     
-                    while !operatorStack.isEmpty && operatorStackPrecedence >= currentNodePrecedence && node.getValue() != "(" {
+                    while !operatorStack.isEmpty && operatorStackPrecedence >= currentNodePrecedence && node.value != "(" {
                         let poppedNode: Node? = operatorStack.popLast()
                         outputQueue.append(poppedNode!)
                         
@@ -79,11 +79,11 @@ struct Expression: CustomStringConvertible {
                 operatorStack.append(node)
             }
             
-            if node.getValue() == "(" {
+            if node.value == "(" {
                 operatorStack.append(node)
             }
-            else if node.getValue() == ")" {
-                while operatorStack.last!.getValue() != "(" {
+            else if node.value == ")" {
+                while operatorStack.last!.value != "(" {
                     let poppedNode: Node? = operatorStack.popLast()
                     outputQueue.append(poppedNode!)
                 }
@@ -110,15 +110,15 @@ struct Expression: CustomStringConvertible {
                 stack.append(node)
             }
             else {
-                let valueOne: Int = stack.popLast()!.getIntValue()
-                let valueTwo: Int = stack.popLast()!.getIntValue()
+                let valueOne: Int = stack.popLast()!.intValue()
+                let valueTwo: Int = stack.popLast()!.intValue()
                 let operatorType: Operator = try getOperator(operatorNode: node)
                 let result: Int = try operatorType.performOperation(on: valueOne, and: valueTwo)
                 let resultString: String = String(result)
                 stack.append(Node(value: resultString))
             }
         }
-        return stack.popLast()!.getIntValue()
+        return stack.popLast()!.intValue()
     }
     
     
@@ -131,7 +131,7 @@ struct Expression: CustomStringConvertible {
     mutating private func nodify(expression values: [String]) throws {
         for value in values {
             let node = Node(value: value)
-            if try !node.isOperandNode() && node.getValue() != "(" && node.getValue() != ")" {
+            if try !node.isOperandNode() && node.value != "(" && node.value != ")" {
                 try _ = getOperator(operatorNode: node)
             }
             expression.append(node)
@@ -154,11 +154,11 @@ struct Expression: CustomStringConvertible {
      */
     private func getOperator(operatorNode: Node) throws -> Operator {
         
-        let operatorType = operators[operatorNode.getValue()]
+        let operatorType = operators[operatorNode.value]
         if operatorType != nil {
             return operatorType!
         }
-        throw CalculationError.undefinedOperator(undefinedOperator: operatorNode.getValue())
+        throw CalculationError.undefinedOperator(undefinedOperator: operatorNode.value)
     }
     
 }

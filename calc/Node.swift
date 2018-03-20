@@ -9,17 +9,15 @@
 import Foundation
 
 /*
- * A model class to represent a given Node.
+ * A struct to represent a given Node.
  */
-class Node {
+struct Node {
     
-    // Private class fields
-    private let value: String
+    // Struct fields
+    let value: String
     
     
     /*
-     * Node()
-     *
      * A constructor that initialises the value of the Node.
      */
     init(value: String) {
@@ -28,32 +26,18 @@ class Node {
     
     
     /*
-     * getValue() -> String
-     *
-     * A getter method that returns the Node's value as a String.
+     * A public function that returns the value of the Node as an Int.
      */
-    func getValue() -> String {
-        return value
-    }
-    
-    
-    /*
-     * getIntValue() -> Int
-     *
-     * A getter method that returns the Node's value as an Int.
-     */
-    func getIntValue() -> Int {
+    func intValue() -> Int {
         return Int(value)!
     }
     
     
     /*
-     * isOperandNode() throws -> Bool
-     *
      * A public method that returns whether the Node's value can
      * be converted to (and therefor must be) an operand as a Bool.
      *
-     * Also throws an error if the value is a number but it is too
+     * Throws an error if the value is a number but it is too
      * big or small to parse into an Int.
      */
     func isOperandNode() throws -> Bool  {
@@ -65,8 +49,6 @@ class Node {
     
     
     /*
-     * isNumber() -> Bool
-     *
      * A helper function to determine if the value of the Node looks
      * like a number (either negative or positive).
      */
