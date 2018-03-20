@@ -15,13 +15,13 @@ args.removeFirst() // Removes the name of the program
 do {
     // Creates an ExpressionHelper object and tells it to use standard operators
     // and sets expression to values supplied as arguments
-    var expressionHelper: ExpressionHelper = try ExpressionHelper(expression: args)
+    var expression: Expression = try Expression(expression: args)
     
     // Converts the expression to postfix notation for evaluation
-    try expressionHelper.convertToPostfix()
+    try expression.convertToPostfix()
 
     // Evaluates and prints the result
-    let result = try expressionHelper.solveExpression()
+    let result = try expression.solveExpression()
     print(result)
 }
 catch CalculationError.undefinedOperator(let undefinedOperator) {

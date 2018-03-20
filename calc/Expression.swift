@@ -1,5 +1,5 @@
 //
-//  ExpressionHelper.swift
+//  Expression.swift
 //  calc
 //
 //  Created by Jonathan Moallem on 15/3/18.
@@ -9,13 +9,22 @@
 import Foundation
 
 /*
- * A helper class to assist in manipulating a given infix expression.
+ * A struct to represent a given Expression.
  */
-struct ExpressionHelper {
+struct Expression: CustomStringConvertible {
     
     // Struct fields
     var operators: [String: Operator]
     var expression: [Node] = [Node]()
+    
+    // Custom stringification definition
+    var description: String {
+        var outputString: String = String()
+        for node in expression {
+            outputString += node.getValue() + " "
+        }
+        return outputString
+    }
     
     
     /*
@@ -150,21 +159,6 @@ struct ExpressionHelper {
             return operatorType!
         }
         throw CalculationError.undefinedOperator(undefinedOperator: operatorNode.getValue())
-    }
-    
-    
-    /*
-     * printExpression()
-     *
-     * A public function that prints out an expression as it currently appears
-     * in the expression array.
-     */
-    func printExpression() {
-        var outputString: String = ""
-        for node in expression {
-            outputString += node.getValue() + " "
-        }
-        print(outputString)
     }
     
 }
