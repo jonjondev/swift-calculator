@@ -28,6 +28,10 @@ catch let error as CalculationError {
     print(error.localizedDescription)
     exit(1)
 }
+catch let error as ExpressionError {
+    print(error.localizedDescription)
+    exit(2)
+}
 
 // Prints the result
 print(result)

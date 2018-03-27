@@ -9,7 +9,7 @@
 import Foundation
 
 /*
- * An custom error enum that defines calculation type errors.
+ * A custom error enum that defines calculation type errors.
  */
 enum CalculationError: Error {
     // Error for unknown operators

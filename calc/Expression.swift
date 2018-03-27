@@ -108,15 +108,25 @@ struct Expression: CustomStringConvertible {
                 stack.append(node)
             }
             else {
-                let valueOne: Int = stack.popLast()!.intValue()
-                let valueTwo: Int = stack.popLast()!.intValue()
+                guard let nodeOne: Node = stack.popLast(), let nodeTwo: Node = stack.popLast() else {
+                        throw ExpressionError.incompleteExpression
+                }
+                
+                let valueOne: Int = nodeOne.intValue()
+                let valueTwo: Int = nodeTwo.intValue()
+                
                 let operatorType: Operator = try getOperator(node: node)
                 let result: Int = try operatorType.performOperation(on: valueOne, and: valueTwo)
                 let resultString: String = String(result)
                 stack.append(Node(value: resultString))
             }
         }
-        return stack.popLast()!.intValue()
+        
+        if let lastElement = stack.popLast() {
+            return lastElement.intValue()
+        }
+        
+        throw ExpressionError.emptyExpression
     }
     
     
