@@ -65,8 +65,10 @@ struct Expression: CustomStringConvertible {
                     let currentNodePrecedence: Int = try getPrecedence(node: node)
                     
                     while !operatorStack.isEmpty && operatorStackPrecedence >= currentNodePrecedence && node.value != "(" {
-                        let poppedNode: Node? = operatorStack.popLast()
-                        outputQueue.append(poppedNode!)
+                        guard let poppedNode: Node = operatorStack.popLast() else {
+                            throw ExpressionError.missingNode
+                        }
+                        outputQueue.append(poppedNode)
                         
                         // Update while conditions
                         if !operatorStack.isEmpty {
@@ -82,15 +84,19 @@ struct Expression: CustomStringConvertible {
             }
             else if node.value == ")" {
                 while operatorStack.last!.value != "(" {
-                    let poppedNode: Node? = operatorStack.popLast()
-                    outputQueue.append(poppedNode!)
+                    guard let poppedNode: Node = operatorStack.popLast() else {
+                        throw ExpressionError.missingNode
+                    }
+                    outputQueue.append(poppedNode)
                 }
             }
         }
         
         while operatorStack.count > 0 {
-            let poppedNode: Node? = operatorStack.popLast()
-            outputQueue.append(poppedNode!)
+            guard let poppedNode: Node = operatorStack.popLast() else {
+                throw ExpressionError.missingNode
+            }
+            outputQueue.append(poppedNode)
         }
         expression = outputQueue
     }
@@ -140,6 +146,7 @@ struct Expression: CustomStringConvertible {
             expression.append(node)
         }
     }
+    
     
     /*
      * A helper function to return a given operator node's precedence.
