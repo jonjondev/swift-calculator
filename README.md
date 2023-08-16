@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/J-Mo63/swift-calculator.svg?branch=master)](https://travis-ci.org/J-Mo63/swift-calculator)
-
 <p style="clear:left">41889 - Application Development in the iOS Environment<br/>42889 - iOS Application Development<br/>Autumn 2018</p>
 
 
